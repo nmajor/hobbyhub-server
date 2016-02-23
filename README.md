@@ -1,0 +1,1 @@
+DEBUG=emailbound ./bin/www
