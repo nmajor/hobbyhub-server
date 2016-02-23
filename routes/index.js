@@ -3,6 +3,19 @@ var router = express.Router();
 var passport = require('passport');
 var User = require('../models/user');
 
+var HobbiesController = require('../controllers/hobbies');
+
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    console.log('User is authenticated.');
+    return next();
+  } else {
+    res.status(401);
+    res.json({error: { message: "Unauthorized. User may not be logged in." }})
+  }
+}
+
 router.get('/user', function(req, res) {
   if (req.user) {
     res.json(req.user);
@@ -39,5 +52,11 @@ router.get('/logout', function(req, res) {
 router.get('/health', function(req, res) {
   res.send('OK');
 });
+
+router.get('/hobby', HobbiesController.get);
+router.get('/hobby/:id', HobbiesController.findOne);
+router.post('/hobby', ensureAuthenticated, HobbiesController.create);
+router.put('/hobby/:id', ensureAuthenticated, HobbiesController.patch);
+router.patch('/hobby/:id', ensureAuthenticated, HobbiesController.patch);
 
 module.exports = router;
