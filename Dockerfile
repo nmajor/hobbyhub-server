@@ -7,6 +7,5 @@ RUN mkdir -p $APP_HOME
 
 ADD . $APP_HOME
 WORKDIR $APP_HOME
-ADD ./container/manta-config.js ./config/manta.js
 
 CMD ["./bin/www"]
