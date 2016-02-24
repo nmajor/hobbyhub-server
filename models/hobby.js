@@ -1,9 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var _ = require('lodash');
 
 var HobbySchema = new Schema({
   name: { type: String, required: 'Name is required!' },
   slug: { type: String, required: 'Slug is required!' },
+  public: { type: Boolean, default: false },
   imageUrl: String,
   indoor: { type: Boolean, default: false },
   computer: { type: Boolean, default: false },
@@ -20,7 +22,12 @@ var HobbySchema = new Schema({
   affiliateLinks: [{
     ref: String,
     text: String
-  }]
+  }],
+  videos: [{
+    src: String
+  }],
+},{
+  timestamps: true
 });
 
 HobbySchema.post( 'init', function() {
@@ -34,6 +41,16 @@ HobbySchema.pre('validate', function(next) {
 
   next();
 });
+
+HobbySchema.methods.propChanged = function(propsString) {
+  var original = this._original || {};
+  var current = this.toObject();
+
+  var originalProp = _.get(original, propsString);
+  var currentProp = _.get(current, propsString);
+
+  return !_.isEqual(originalProp, currentProp);
+},
 
 function slugify(text) {
   return text.toString().toLowerCase()

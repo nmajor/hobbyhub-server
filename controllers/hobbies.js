@@ -1,4 +1,5 @@
 var Hobby = require('../models/hobby');
+var _ = require('lodash');
 
 var conceptsController = {
   findOne: function(req, res, next) {
@@ -18,6 +19,30 @@ var conceptsController = {
     newHobby.save()
     .then(function(savedHobby) {
       res.json(savedHobby);
+    })
+  },
+  update: function(req, res, next) {
+    console.log(Hobby.schema);
+    Hobby.findOne({slug: req.params.slug})
+    .then(function(hobby) {
+      hobby.name = req.body.name
+      hobby.public = req.body.public
+      hobby.imageUrl = req.body.imageUrl
+      hobby.indoor = req.body.indoor
+      hobby.computer = req.body.computer
+      hobby.practical = req.body.practical
+      hobby.creative = req.body.creative
+      hobby.difficulty = req.body.difficulty
+      hobby.startingCost = req.body.startingCost
+      hobby.repeatCost = req.body.repeatCost
+      hobby.desc = req.body.desc
+      hobby.resources = req.body.resources
+      hobby.affiliateLinks = req.body.affiliateLinks
+      hobby.videos = req.body.videos
+      return hobby.save();
+    })
+    .then(function(hobby) {
+      res.json(hobby);
     })
   },
   patch: function(req, res, next) {

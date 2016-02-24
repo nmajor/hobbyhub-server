@@ -56,7 +56,7 @@ router.get('/health', function(req, res) {
 router.get('/hobbies', HobbiesController.get);
 router.get('/hobbies/:slug', HobbiesController.findOne);
 router.post('/hobbies', ensureAuthenticated, HobbiesController.create);
-router.put('/hobbies/:slug', ensureAuthenticated, HobbiesController.patch);
+router.put('/hobbies/:slug', ensureAuthenticated, HobbiesController.update);
 router.patch('/hobbies/:slug', ensureAuthenticated, HobbiesController.patch);
 
 module.exports = router;
