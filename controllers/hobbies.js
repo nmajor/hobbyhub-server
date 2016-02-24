@@ -10,7 +10,7 @@ var conceptsController = {
   get: function(req, res, next) {
     Hobby.find({})
     .then(function(hobbies) {
-      res.json(compilations);
+      res.json(hobbies);
     })
   },
   create: function(req, res, next) {
@@ -25,7 +25,6 @@ var conceptsController = {
     .then(function(hobby) {
       var mergedHobby = _.merge(hobby.toObject(), req.body);
       _.extend(hobby, mergedHobby);
-      // return compilation.update(req.body, { runValidators: true });
       return hobby.save();
     })
     .then(function(hobby) {

@@ -53,10 +53,10 @@ router.get('/health', function(req, res) {
   res.send('OK');
 });
 
-router.get('/hobby', HobbiesController.get);
-router.get('/hobby/:id', HobbiesController.findOne);
-router.post('/hobby', ensureAuthenticated, HobbiesController.create);
-router.put('/hobby/:id', ensureAuthenticated, HobbiesController.patch);
-router.patch('/hobby/:id', ensureAuthenticated, HobbiesController.patch);
+router.get('/hobbies', HobbiesController.get);
+router.get('/hobbies/:slug', HobbiesController.findOne);
+router.post('/hobbies', ensureAuthenticated, HobbiesController.create);
+router.put('/hobbies/:slug', ensureAuthenticated, HobbiesController.patch);
+router.patch('/hobbies/:slug', ensureAuthenticated, HobbiesController.patch);
 
 module.exports = router;
