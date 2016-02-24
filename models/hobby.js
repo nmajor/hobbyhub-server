@@ -10,7 +10,7 @@ var HobbySchema = new Schema({
   indoor: { type: Boolean, default: false },
   computer: { type: Boolean, default: false },
   practical: { type: Boolean, default: false },
-  creative: { type: Boolean, default: false },
+  artistic: { type: Boolean, default: false },
   difficulty: Number,
   startingCost: [],
   repeatCost: [],
