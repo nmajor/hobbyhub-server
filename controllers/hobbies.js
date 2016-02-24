@@ -9,8 +9,16 @@ var conceptsController = {
     })
   },
   get: function(req, res, next) {
+    Hobby.find({public: true})
+    .then(function(hobbies) {
+      hobbies = hobbies || [];
+      res.json(hobbies);
+    })
+  },
+  getAll: function(req, res, next) {
     Hobby.find({})
     .then(function(hobbies) {
+      hobbies = hobbies || [];
       res.json(hobbies);
     })
   },
@@ -22,7 +30,6 @@ var conceptsController = {
     })
   },
   update: function(req, res, next) {
-    console.log(Hobby.schema);
     Hobby.findOne({slug: req.params.slug})
     .then(function(hobby) {
       hobby.name = req.body.name
