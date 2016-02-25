@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var session = require('express-session');
+// var cors = require('cors');
 var ConnectMongo = require('connect-mongo')(session);
 
 var routes = require('./routes/index');
@@ -43,13 +44,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", process.env.ALLOWED_ORIGIN || "http://localhost:8000");
-  res.header("Access-Control-Allow-Credentials", 'true');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+function allowCrossDomain(req, res, next) {
+  var allowed = [
+    'http://localhost:8000',
+    'http://dockerhost',
+    'http://hobby.nmajor.com',
+    'http://dathobby.com',
+    'http://www.dathobby.com',
+  ];
+
+  if( allowed.indexOf(req.headers.origin) > -1 ){
+    console.log('hey');
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
+    res.header("Access-Control-Allow-Credentials", 'true');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  }
+}
+
+app.use(allowCrossDomain);
 
 app.use('/', routes);
 
