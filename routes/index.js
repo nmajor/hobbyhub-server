@@ -25,7 +25,15 @@ router.get('/user', function(req, res) {
   }
 });
 
-router.post('/register', function(req, res) {
+router.get('/users', ensureAuthenticated, function(req, res) {
+  User.find({})
+  .then(function(users) {
+    users = users || [];
+    res.json(users);
+  })
+});
+
+router.post('/register', ensureAuthenticated, function(req, res) {
   User.register(new User({ email : req.body.email }), req.body.password, function(err, user) {
     if (err) {
       return res.json({error: {
