@@ -33,7 +33,8 @@ var HobbySchema = new Schema({
     text: String
   }],
   videos: [{
-    src: String
+    src: String,
+    text: String
   }],
 },{
   timestamps: true
