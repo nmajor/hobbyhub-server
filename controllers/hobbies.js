@@ -27,6 +27,8 @@ var conceptsController = {
     newHobby.save()
     .then(function(savedHobby) {
       res.json(savedHobby);
+    }).catch(function(err) {
+      res.status(400).json(err);
     })
   },
   update: function(req, res, next) {
