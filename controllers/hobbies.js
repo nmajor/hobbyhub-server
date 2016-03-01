@@ -28,8 +28,8 @@ var conceptsController = {
     .then(function(savedHobby) {
       res.json(savedHobby);
     }).catch(function(err) {
-      res.status(400).json(err);
-    })
+      // Return any validation errors here
+    });
   },
   update: function(req, res, next) {
     Hobby.findOne({slug: req.params.slug})
