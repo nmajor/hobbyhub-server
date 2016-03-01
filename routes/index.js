@@ -62,7 +62,7 @@ router.get('/health', function(req, res) {
 });
 
 router.get('/hobbies', HobbiesController.get);
-router.get('/hobbies/all', HobbiesController.getAll);
+router.get('/hobbies/all', ensureAuthenticated, HobbiesController.getAll);
 router.get('/hobbies/:slug', HobbiesController.findOne);
 router.post('/hobbies', ensureAuthenticated, HobbiesController.create);
 router.put('/hobbies/:slug', ensureAuthenticated, HobbiesController.update);
