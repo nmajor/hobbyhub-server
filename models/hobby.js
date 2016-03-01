@@ -23,7 +23,7 @@ var HobbySchema = new Schema({
   difficulty: Number,
   startingCost: [],
   repeatCost: [],
-  desc: { type: String, required: 'Description is required!' },
+  desc: type: String,
   resources: [{
     ref: String,
     text: String
