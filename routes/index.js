@@ -5,6 +5,38 @@ var User = require('../models/user');
 
 var HobbiesController = require('../controllers/hobbies');
 
+require('node-jsx').install({extension: '.jsx'})
+
+var React = require('react');
+var renderToString = require('react-dom/server').renderToString;
+var match = require('react-router').match;
+var RoutingContext = require('react-router').RoutingContext;
+
+var routes = React.createFactory(require('../client/src/routes'));
+
+router.get('/', function(req, res){
+  match({ routes, location: req.url }, function(error, redirectLocation, renderProps) {
+    if (error) {
+      res.status(500).send(error.message)
+    } else if (redirectLocation) {
+      res.redirect(302, redirectLocation.pathname + redirectLocation.search)
+    } else if (renderProps) {
+      res.status(200).send(renderToString(React.createFactory(RoutingContext, {props: renderProps})))
+    } else {
+      res.status(404).send('Not found')
+    }
+  });
+
+  // // React.renderToString takes your component and generates the markup
+  // var reactHtml = ReactDOMServer.renderToString(ReactApp);
+  // // var reactHtml = React.renderToString(ReactApp({}));
+  // console.log('blah2');
+  // console.log(reactHtml);
+  //
+  // // Output html rendered by react into .ejs file. Can be any template
+  // res.render('index.ejs', {reactOutput: reactHtml});
+});
+
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
